@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+
+import AuthContext from "./app/context/AuthContext";
+import AppContext from "./app/context/AppContext";
+
+import AuthNavigator from "./app/navigations/AuthNavigator";
+import DrawerNavigator from "./app/navigations/DrawerNavigator";
 
 export default function App() {
+  const [user, setUser] = useState();
+  const [accounts, setAccounts] = useState([]);
+  const [popUpMenu, setPopUpMenu] = useState(false);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContext.Provider value={{ user, accounts, setUser, setAccounts }}>
+      <AppContext.Provider value={{ popUpMenu, setPopUpMenu }}>
+        {!user ? <AuthNavigator /> : <DrawerNavigator />}
+      </AppContext.Provider>
+    </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
