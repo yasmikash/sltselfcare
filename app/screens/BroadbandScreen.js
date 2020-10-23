@@ -86,6 +86,7 @@ export default function BroadbandScreen({ navigation }) {
         </View>
       </View>
       <AppButton
+        onPress={() => navigation.navigate(routes.DATA_BALANCE)}
         text="More Details"
         style={{
           width: "50%",

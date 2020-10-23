@@ -9,8 +9,11 @@ import colors from "../config/colors";
 import Card from "../components/Card";
 import AppField from "../components/form/AppField";
 import routes from "../routes/routes";
+import MapModal from "../components/MapModal";
 
 export default function ServiceRequestScreen({ navigation }) {
+  const [modalVisilibity, setModalVisibility] = useState(false);
+
   const [voice, setVoice] = useState(true);
   const [broadband, setBroadband] = useState(true);
   const [peoTV, setPeoTV] = useState(false);
@@ -18,6 +21,10 @@ export default function ServiceRequestScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
+      <MapModal
+        modalVisibility={modalVisilibity}
+        closeHandler={() => setModalVisibility(false)}
+      />
       <Card style={styles.container}>
         <View
           style={{
@@ -164,6 +171,7 @@ export default function ServiceRequestScreen({ navigation }) {
           />
         </View>
         <Button
+          onPress={() => setModalVisibility(true)}
           uppercase={false}
           icon="map-marker"
           mode="outlined"

@@ -42,6 +42,7 @@ const routes = Object.freeze({
 
   MY_COMPLAINTS: "My Complaints",
   COMPLAINTS: "Complaints",
+  COMPLAINTS_SUCCESS: "Complaints Submitted Successfully",
 
   CONTACT_US: "Contact Us",
   CONTACT: "Contact",

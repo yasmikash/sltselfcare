@@ -9,6 +9,7 @@ import colors from "../config/colors";
 import MenuButton from "../components/MenuButton";
 import BackButton from "../components/BackButton";
 import ComplaintsScreen from "../screens/ComplaintsScreen";
+import ComplaintsSubmitSuccess from "../screens/ComplaintsSubmitSuccess";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,16 @@ export default function PromotionsNavigator({ navigation }) {
         }}
         name={routes.MY_COMPLAINTS}
         component={ComplaintsScreen}
+      />
+
+      <Stack.Screen
+        options={{
+          headerLeft: () => {
+            return <BackButton onPress={() => navigation.goBack()} />;
+          },
+        }}
+        name={routes.COMPLAINTS_SUCCESS}
+        component={ComplaintsSubmitSuccess}
       />
     </Stack.Navigator>
   );

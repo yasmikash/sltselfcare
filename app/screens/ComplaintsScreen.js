@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Button } from "react-native-paper";
@@ -9,10 +9,18 @@ import Card from "../components/Card";
 import AppText from "../components/AppText";
 import colors from "../config/colors";
 import AppField from "../components/form/AppField";
+import routes from "../routes/routes";
+import MapModal from "../components/MapModal";
 
-export default function ComplaintsScreen() {
+export default function ComplaintsScreen({ navigation }) {
+  const [modalVisilibity, setModalVisibility] = useState(false);
+
   return (
     <Screen style={styles.container}>
+      <MapModal
+        modalVisibility={modalVisilibity}
+        closeHandler={() => setModalVisibility(false)}
+      />
       <Card>
         <AppText
           size="large"
@@ -43,6 +51,7 @@ export default function ComplaintsScreen() {
           />
         </View>
         <Button
+          onPress={() => setModalVisibility(true)}
           uppercase={false}
           icon="map-marker"
           mode="outlined"
@@ -78,6 +87,7 @@ export default function ComplaintsScreen() {
         />
 
         <AppButton
+          onPress={() => navigation.navigate(routes.COMPLAINTS_SUCCESS)}
           text="Submit Complaint"
           style={{
             marginTop: 20,
