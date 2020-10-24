@@ -1,13 +1,43 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Modal, Dimensions } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Modal, Dimensions, Alert } from "react-native";
+import * as Location from "expo-location";
 
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import colors from "../config/colors";
 import { Button } from "react-native-paper";
 
 const deviceHeight = Dimensions.get("window").height;
 
 export default function MapModal({ modalVisibility, closeHandler }) {
+  useEffect(() => {
+    getLocationPermission();
+    console.log("ss");
+  }, []);
+
+  const getLocationPermission = async () => {
+    const { granted } = await Location.requestPermissionsAsync();
+    if (!granted) {
+      Alert.alert(
+        "Allow Location Permission",
+        "Please allow location permission get your current location.",
+        [
+          {
+            text: "Allow",
+            onPress: () => {
+              getLocationPermission();
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      const location = await Location.getCurrentPositionAsync();
+      setCoordinate(location.coords);
+    }
+  };
+
+  const [coordinate, setCoordinate] = useState(false);
+
   return (
     <Modal visible={modalVisibility} animationType="slide">
       <View style={styles.container}>
@@ -25,7 +55,9 @@ export default function MapModal({ modalVisibility, closeHandler }) {
             borderBottomColor: colors.gradientEndSolid,
             elevation: 10,
           }}
-        ></MapView>
+        >
+          {coordinate ? <Marker coordinate={coordinate} /> : null}
+        </MapView>
 
         <Button
           onPress={closeHandler}
